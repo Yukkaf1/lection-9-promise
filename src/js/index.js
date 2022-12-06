@@ -1,83 +1,92 @@
-// //  console.log("Hallo Lection 9");
+// const promise = new Promise((resolve, reject) => {
+//     const canFulfill = Math.random() > 0.5;
 
-// // const date1 = new Date().getTime();
-// // console.log('date1', date1);
+//     setTimeout(() => {
+//         if (canFulfill) {
+//             resolve('Промис успешно');
+//         }
+//         reject('Промис с ошибкой')
+//     }, 2000);
 
-// // // console.log(date.getMonth());
+// });
 
-// // // console.log(date.getTime());
+// // promise.then(
+// //     result => {
+// //         console.log(result);
+// //     },
+// //     error => {
+// //         console.log(error);
+// //     }
+// // );
 
-// // setTimeout(() => {
-// //     const date2 = new Date().getTime();
-// //     console.log('date1', date1);
-// //     console.log('date2', date2);
-// //     console.log(date2 - date1);
-// // }, 3000)
+// // promise.then(onFul, onRej);
 
-// const date1 = Date.now().getTime();
-// console.log('date1', date1);
+// function onFul(result) {
+//     console.log(result);
+// };
 
-// setTimeout(() => {
-//     const date2 = Date.now().getTime();
-//     console.log('date1', date1);
-//     console.log('date2', date2);
-//     console.log(date2 - date1);
-// }, 3000)
+// function onRej(error) {
+//     console.log(error);
+// };
 
-//========== TIMER
-const refs = {
-    startBtn: document.querySelector('button[data-action-start]'),
-    stopBtn: document.querySelector('button[data-action-stop]'),
-    clockface: document.querySelector('.js-clock'),
-}
+// promise
+// .then(onFul)
+// .then(x => {
+//     console.log(x);
+//     return 10;
+// })
+// .then(y => console.log(y))
+// .catch( error => console.log(error))
+// .finally(() => console.log("Я в любом случае здесь"));
 
-const timer = {
-intervalId : null,
-isActive: false,
-    start() {
-        if(this.isActive) {
-            return;
-        }
-const startTime = Date.now();
-this.isActive = true;
+// -------------- блюдо
 
-this.intervalId = setInterval(() => {
-const currentTime = Date.now();
-const time = currentTime - startTime;
-const timeClock = getTime(time);
-updateClock(timeClock);
-}, 1000)
-    },
+// const makeOrder = disch => {
+//     const DELAY = 500;  
+   
+//     // здесь сразу можно писать return promise = new Promise...
+//     const promise = new Promise((resolve, reject) => {
+//         const passend = Math.random() > 0.5;
+//         console.log(passend);
 
-    stop () {
-        clearInterval(this.intervalId);
-        this.isActive = false;
-    }
-}
+//         setTimeout(() => {
+//         if (passend) {
+//             resolve('ваше блюдо');
+//         } 
+//             reject('нет продуктов');
+//         }, DELAY);
+//     });
+//     return promise;
+// };
 
+// makeOrder('пирожок').then(onMakeOrderSuccess).catch(onMakeError);
 
-refs.startBtn.addEventListener('click', () => {
-    timer.start();
-})
+// function onMakeOrderSuccess(result) {
+//     console.log(result)
+// }
 
-refs.stopBtn.addEventListener('click', () => {
-    timer.stop();
-})
+// function onMakeError(error) {
+//     console.log(error);
+// }
 
-function updateClock ({hours, mins, secs}) {
-    refs.clockface.textContent = `${hours} : ${mins} : ${secs} `;
-}
+// ===== ПОКЕМОНЫ
+// fetch функция возвращает промис
 
-function getTime(time) {
-    const hours = 
-    pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-    const mins = pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
-    const secs = pad(Math.floor((time % (1000 * 60)) / 1000));
-    return {hours, mins, secs};
-}
+const fetchPokemonById = id => {
+return fetch( `https://pokeapi.co/api/v2/pokemon/${id} `)
+.then(r => r.json());
+};
 
-function pad(value) {
-    return String(value).padStart(2, '0');
-}
+fetchPokemonById(1).then(onSuccess).catch(onError);
+fetchPokemonById(12).then(onSuccess).catch(onError);
+fetchPokemonById(122).then(onSuccess).catch(onError);
+fetchPokemonById(174).then(onSuccess).catch(onError);
 
-getTime(time);
+function onSuccess(pokemon) {
+    console.log(pokemon);
+};
+
+function onError(pokemon) {
+    console.log('error', error);
+};
+

@@ -532,73 +532,77 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"ebWYT":[function(require,module,exports) {
-// //  console.log("Hallo Lection 9");
-// // const date1 = new Date().getTime();
-// // console.log('date1', date1);
-// // // console.log(date.getMonth());
-// // // console.log(date.getTime());
-// // setTimeout(() => {
-// //     const date2 = new Date().getTime();
-// //     console.log('date1', date1);
-// //     console.log('date2', date2);
-// //     console.log(date2 - date1);
-// // }, 3000)
-// const date1 = Date.now().getTime();
-// console.log('date1', date1);
-// setTimeout(() => {
-//     const date2 = Date.now().getTime();
-//     console.log('date1', date1);
-//     console.log('date2', date2);
-//     console.log(date2 - date1);
-// }, 3000)
-//========== TIMER
-const refs = {
-    startBtn: document.querySelector("button[data-action-start]"),
-    stopBtn: document.querySelector("button[data-action-stop]"),
-    clockface: document.querySelector(".js-clock")
+// const promise = new Promise((resolve, reject) => {
+//     const canFulfill = Math.random() > 0.5;
+//     setTimeout(() => {
+//         if (canFulfill) {
+//             resolve('Промис успешно');
+//         }
+//         reject('Промис с ошибкой')
+//     }, 2000);
+// });
+// // promise.then(
+// //     result => {
+// //         console.log(result);
+// //     },
+// //     error => {
+// //         console.log(error);
+// //     }
+// // );
+// // promise.then(onFul, onRej);
+// function onFul(result) {
+//     console.log(result);
+// };
+// function onRej(error) {
+//     console.log(error);
+// };
+// promise
+// .then(onFul)
+// .then(x => {
+//     console.log(x);
+//     return 10;
+// })
+// .then(y => console.log(y))
+// .catch( error => console.log(error))
+// .finally(() => console.log("Я в любом случае здесь"));
+// -------------- блюдо
+// const makeOrder = disch => {
+//     const DELAY = 500;  
+//     // здесь сразу можно писать return promise = new Promise...
+//     const promise = new Promise((resolve, reject) => {
+//         const passend = Math.random() > 0.5;
+//         console.log(passend);
+//         setTimeout(() => {
+//         if (passend) {
+//             resolve('ваше блюдо');
+//         } 
+//             reject('нет продуктов');
+//         }, DELAY);
+//     });
+//     return promise;
+// };
+// makeOrder('пирожок').then(onMakeOrderSuccess).catch(onMakeError);
+// function onMakeOrderSuccess(result) {
+//     console.log(result)
+// }
+// function onMakeError(error) {
+//     console.log(error);
+// }
+// ===== ПОКЕМОНЫ
+// fetch функция возвращает промис
+const fetchPokemonById = (id)=>{
+    return fetch(`https://pokeapi.co/api/v2/pokemon/${id} `).then((r)=>r.json());
 };
-const timer = {
-    intervalId: null,
-    isActive: false,
-    start () {
-        if (this.isActive) return;
-        const startTime = Date.now();
-        this.isActive = true;
-        this.intervalId = setInterval(()=>{
-            const currentTime = Date.now();
-            const time1 = currentTime - startTime;
-            const timeClock = getTime(time1);
-            updateClock(timeClock);
-        }, 1000);
-    },
-    stop () {
-        clearInterval(this.intervalId);
-        this.isActive = false;
-    }
-};
-refs.startBtn.addEventListener("click", ()=>{
-    timer.start();
-});
-refs.stopBtn.addEventListener("click", ()=>{
-    timer.stop();
-});
-function updateClock({ hours , mins , secs  }) {
-    refs.clockface.textContent = `${hours} : ${mins} : ${secs} `;
+fetchPokemonById(1).then(onSuccess).catch(onError);
+fetchPokemonById(12).then(onSuccess).catch(onError);
+fetchPokemonById(122).then(onSuccess).catch(onError);
+fetchPokemonById(174).then(onSuccess).catch(onError);
+function onSuccess(pokemon) {
+    console.log(pokemon);
 }
-function getTime(time1) {
-    const hours = pad(Math.floor(time1 % 86400000 / 3600000));
-    const mins = pad(Math.floor(time1 % 3600000 / 60000));
-    const secs = pad(Math.floor(time1 % 60000 / 1000));
-    return {
-        hours,
-        mins,
-        secs
-    };
+function onError(pokemon) {
+    console.log("error", error);
 }
-function pad(value) {
-    return String(value).padStart(2, "0");
-}
-getTime(time);
 
 },{}]},["cVgJb","ebWYT"], "ebWYT", "parcelRequire2afd")
 
